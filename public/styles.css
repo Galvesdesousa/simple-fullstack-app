@@ -1,0 +1,106 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #add8e6; /* Baby blue background color */
+    position: relative; /* Make body position relative */
+    overflow-x: hidden; /* Hide horizontal overflow to prevent horizontal scrollbars */
+}
+
+.logo-container {
+    text-align: center; /* Center the logo horizontally */
+    margin-top: 20px; /* Add space from the top */
+    background-color: #add8e6; /* Baby blue background color */
+    border-radius: 50%; /* Make the container circular */
+    overflow: hidden; /* Hide overflow content (logo outside the circle) */
+    width: fit-content; /* Adjust the width to fit the content (logo) */
+    margin: 0 auto; /* Center the container */
+}
+
+.logo-container img {
+    max-width: 200px; /* Limit the width of the logo */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff; /* White background for content */
+    padding: 20px;
+    border-radius: 8px;
+    position: relative; /* Make container position relative */
+    border: 5px solid #080601; /* Dark yellow border */
+}
+
+.label-container {
+    position: absolute; /* Position the label container absolutely */
+    top: 50%; /* Position from the top */
+    left: 50%; /* Position from the left */
+    transform: translate(-50%, -50%); /* Center the label container */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase; /* Convert text to uppercase */
+    text-align: center; /* Center the text */
+    font-weight: bold; /* Make the font thicker */
+    font-family: Arial, sans-serif; /* Font family for label */
+}
+
+input[type="number"] {
+    width: calc(100% - 20px); /* Set the width to fill the container minus the padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: Arial, sans-serif; /* Font family for input */
+}
+
+button {
+    width: calc(100% - 20px); /* Set the width to fill the container minus the padding */
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: Arial, sans-serif; /* Font family for button */
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+h1 {
+    text-align: center; /* Center the text */
+    font-weight: bold; /* Make the font thicker */
+    font-family: Arial, sans-serif; /* Font family for heading */
+}
+
+#app {
+    text-align: center; /* Center the content within the container */
+}
+
+.pokeball-container {
+    position: fixed; /* Position the Pokeball container fixed */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    width: 100%; /* Occupy full width */
+    height: 100%; /* Occupy full height */
+    background-image: url('combined-pokeballs.png'); /* Add the combined Pokeballs image as background */
+    background-repeat: repeat; /* Repeat the background image */
+    background-size: 100px; /* Set the size of each background image (each Pokeball) to increase space between them */
+    animation: movePokeballs 20s linear infinite; /* Apply the animation to move the Pokeballs (duration increased to 20s) */
+    z-index: -1; /* Set z-index to send it to the background */
+}
+
+@keyframes movePokeballs {
+    0% {
+        background-position: 0 0; /* Start at the top left corner */
+    }
+    100% {
+        background-position: 100% 100%; /* Move to the bottom right corner */
+    }
+}

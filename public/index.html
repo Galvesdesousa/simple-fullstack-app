@@ -1,0 +1,27 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Info</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="logo-container">
+        <img src="pokemon-logo.png" alt="Pokémon Logo">
+    </div>
+    <div class="container">
+        <label for="pokemonNumber">Enter Pokémon Number:</label>
+        <input type="number" id="pokemonNumber" min="1" max="807">
+        <button id="fetchButton">Fetch Pokémon</button>
+    </div>
+    <div class="pokeball-container">
+        <!-- Animation will appear here -->
+    </div>
+    <div id="app" class="container">
+        <!-- Pokémon data will be loaded here -->
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
