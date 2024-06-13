@@ -1,4 +1,3 @@
-// scripts.js
 document.addEventListener('DOMContentLoaded', function() {
     const fetchButton = document.getElementById('fetchButton');
 
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const abilitiesData = await fetchAbilitiesData(data.abilities);
 
             // Fetch stats data
-            const statsData = data.stats.map(stat => `${stat.stat.name}: ${stat.base_stat}`);
+            const statsData = data.stats.map(stat => `${capitalizeFirstLetter(stat.stat.name)}: ${stat.base_stat}`);
 
             // Fetch moves data
             const movesData = await fetchMovesData(data.moves);
@@ -34,8 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Display Pokémon name
             const nameElement = document.createElement('h2');
-            const capitalizedPokemonName = data.name.charAt(0).toUpperCase() + data.name.slice(1); // Capitalize first letter
-            nameElement.textContent = `Name: ${capitalizedPokemonName}`;
+            nameElement.textContent = `Name: ${capitalizeFirstLetter(data.name)}`;
             nameElement.style.fontFamily = 'Arial, sans-serif';
             document.getElementById('app').appendChild(nameElement);
 
@@ -72,13 +70,13 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error fetching Pokémon data:', error);
         }
     });
-    
+
     // Function to fetch type data
     async function fetchTypeData(types) {
         const typePromises = types.map(async type => {
             const response = await fetch(type.type.url);
             const data = await response.json();
-            return data.name;
+            return capitalizeFirstLetter(data.name);
         });
         return Promise.all(typePromises);
     }
@@ -88,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const abilityPromises = abilities.map(async ability => {
             const response = await fetch(ability.ability.url);
             const data = await response.json();
-            return data.name;
+            return capitalizeFirstLetter(data.name);
         });
         return Promise.all(abilityPromises);
     }
@@ -96,9 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch moves data
     async function fetchMovesData(moves) {
         const movePromises = moves.map(async move => {
-            const response = await fetch(move.move.url);
-            const data = await response.json();
-            return data.name;
+            try {
+                const response = await fetch(move.move.url);
+                if (!response.ok) throw new Error('Move not found');
+                const data = await response.json();
+                return capitalizeFirstLetter(data.name);
+            } catch (error) {
+                console.warn('Move not found:', move.move.name);
+                return move.move.name;  // Return the move name if fetch fails
+            }
         });
         return Promise.all(movePromises);
     }
@@ -113,16 +117,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return evolutionChainData.chain;
     }
 
-  // Function to fetch Pokémon details
-async function fetchPokemonDetails(pokemonId) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`);
-    const data = await response.json();
-    const name = data.name.charAt(0).toUpperCase() + data.name.slice(1); // Capitalize first letter
-    return {
-        name: name,
-        image: data.sprites.front_default // You can use other sprite URLs for different images
-    };
-}
+    // Function to fetch Pokémon details
+    async function fetchPokemonDetails(pokemonId) {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`);
+        const data = await response.json();
+        return {
+            name: capitalizeFirstLetter(data.name),
+            image: data.sprites.front_default // You can use other sprite URLs for different images
+        };
+    }
 
     // Function to display evolution chain
     function displayEvolutionChain(evolutionChain) {
@@ -172,5 +175,10 @@ async function fetchPokemonDetails(pokemonId) {
                 displayPokemon(evolution, evolutionContainer);
             }
         }
+    }
+
+    // Function to capitalize the first letter of a string
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 });
